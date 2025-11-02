@@ -68,3 +68,7 @@ docker logs [容器名]
 ![running example](/img/running_example.gif)
 
 如果使用推理模型慢,那就是 aistudio 的问题, 和本项目没关系
+
+
+网页访问：
+https://aistudio.google.com/apps/drive/1YL729RgvbQc4Zw3z47gghil0abBqg3Rh?showPreview=true&showAssistant=true

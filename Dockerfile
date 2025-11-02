@@ -40,11 +40,13 @@ COPY --from=builder-go /go_app_binary .
 # 复制 Python 项目的 requirements.txt 并安装依赖
 COPY camoufox-py/requirements.txt ./camoufox-py/requirements.txt
 RUN pip install --no-cache-dir -r ./camoufox-py/requirements.txt
+# 设置 GitHub Token 以避免 API 限流
+ARG GITHUB_TOKEN
+ENV GITHUB_TOKEN=${GITHUB_TOKEN}
 
 # 运行 camoufox fetch
 # 注意：如果 camoufox 需要在项目根目录运行，需要调整 WORKDIR 或命令路径
-RUN camoufox fetch
-
+RUN set -e; for i in 1 2 3 4 5; do camoufox fetch && exit 0 || { echo "camoufox fetch failed (attempt $i), retrying..."; sleep $((i*5)); }; done; exit 1
 # 复制 Python 项目的所有文件
 COPY camoufox-py/ .
 # 为了保持目录结构清晰，我们把它放到 camoufox-py 子目录中

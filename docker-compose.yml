@@ -1,11 +1,14 @@
 services:
   camoufox:
-    build: .
+    build:
+      context: .
+      args:
+        - GITHUB_TOKEN=${GITHUB_TOKEN}
     ports:
       - "5345:5345"
     environment:
       # 设置一个你最终Gemini服务的API密钥
-      - AUTH_API_KEY=your_set_api_key_here
+      - AUTH_API_KEY=123456
     volumes:
       - ./camoufox-py/config.yaml:/app/config.yaml
       - ./camoufox-py/cookies:/app/cookies
